@@ -1,25 +1,49 @@
-import logo from './logo.svg';
-import './App.css';
+import { Component} from 'react';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+
+  
+  constructor(props){
+    super(props);
+    this.state = {
+      currentItem: "",
+      listOfItems: []
+    }
+
+    this.handleChangeItem = this.handleChangeItem.bind(this);
+  }
+
+  addItem() {
+    console.log("Add Item");
+    console.log(this.state.currentItem);
+    this.setState(prevState => ({
+        listOfItems: [...prevState.listOfItems, this.state.currentItem]
+      })
+    );
+
+    console.log('List of Items:', this.state.listOfItems);
+  }
+
+  handleChangeItem(event) {
+    this.setState({currentItem: event.target.value})
+  }
+
+
+  render() {
+    return (
+      <div>
+        <div>
+          Add an Item...
+          <br/>
+          <input type = "text" placeholder = "Type item here..." onChange = {this.handleChangeItem}/>
+          <button onClick = {() => this.addItem()}>Add</button>
+          {this.state.listOfItems.map(item => (
+            <p>{item}</p>
+          ))}
+        
+        </div>
+      </div>
+    );
+  }
 }
-
 export default App;
